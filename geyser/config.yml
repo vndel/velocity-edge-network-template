@@ -1,0 +1,71 @@
+# ═══════════════════════════════════════════════════════════════
+#  Geyser — Bedrock Edition bridge
+#
+#  Geyser runs on the proxy, not on the backends. Bedrock clients
+#  connect over UDP to a different port; Geyser translates them into
+#  Java protocol and hands them to Velocity as ordinary players.
+# ═══════════════════════════════════════════════════════════════
+
+bedrock:
+  address: 0.0.0.0
+  # Bedrock's default. Changing it means every player must type a port.
+  port: 19132
+  clone-remote-port: false
+  motd1: 'CodeHub Network'
+  motd2: 'Survival · Skyblock · Prison'
+  server-name: 'CodeHub'
+  compression-level: 6
+  enable-proxy-protocol: false
+
+remote:
+  # 'auto' reads the Velocity listener directly.
+  address: auto
+  port: 25565
+  # Required: Floodgate supplies the authentication for Bedrock players,
+  # who have no Java account to verify against.
+  auth-type: floodgate
+  allow-password-authentication: true
+  use-proxy-protocol: false
+  forward-hostname: false
+
+floodgate-key-file: key.pem
+
+command-suggestions: true
+passthrough-motd: false
+passthrough-player-counts: true
+legacy-ping-passthrough: false
+ping-passthrough-interval: 3
+
+forward-player-ping: false
+max-players: 500
+
+debug-mode: false
+allow-third-party-capes: true
+allow-third-party-ears: false
+show-cooldown: title
+show-coordinates: true
+disable-bedrock-scaffolding: false
+emote-offhand-workaround: 'disabled'
+
+default-locale: en_US
+cache-images: 0
+allow-custom-skulls: true
+max-visible-custom-skulls: 128
+custom-skull-render-distance: 32
+
+add-non-bedrock-items: true
+above-bedrock-nether-building: false
+force-resource-packs: true
+xbox-achievements-enabled: false
+log-player-ip-addresses: true
+notify-on-new-bedrock-update: true
+
+unusable-space-block: minecraft:barrier
+
+scoreboard-packet-threshold: 20
+
+enable-proxy-connections: false
+
+mtu: 1400
+use-direct-connection: true
+disable-compression: true
