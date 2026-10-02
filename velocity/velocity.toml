@@ -1,0 +1,77 @@
+# ═══════════════════════════════════════════════════════════════
+#  velocity.toml — edge proxy configuration
+#
+#  The single most important line in this file is
+#  player-info-forwarding-mode. "modern" signs the forwarded player
+#  identity, so a backend exposed to the internet cannot be used to
+#  join as an arbitrary UUID. "legacy" and "bungeeguard" both trust
+#  the connection itself, which is why backends must then be
+#  firewalled off entirely.
+# ═══════════════════════════════════════════════════════════════
+
+config-version = "2.7"
+
+bind = "0.0.0.0:25565"
+
+motd = "<gradient:#00c6ff:#0072ff>CodeHub Network</gradient>\n<gray>Survival · Skyblock · Prison</gray>"
+
+show-max-players = 500
+
+# false lets Velocity handle authentication; required when backends
+# run with online-mode=false behind the proxy.
+online-mode = true
+
+# Rejects clients that connect directly to a backend port and try to
+# forward their own identity.
+force-key-authentication = true
+
+prevent-client-proxy-connections = false
+
+player-info-forwarding-mode = "modern"
+forwarding-secret-file = "forwarding.secret"
+
+announce-forge = false
+kick-existing-players = false
+ping-passthrough = "disabled"
+enable-player-address-logging = true
+
+[servers]
+lobby-01 = "127.0.0.1:25566"
+lobby-02 = "127.0.0.1:25567"
+survival-01 = "127.0.0.1:25568"
+skyblock-01 = "127.0.0.1:25569"
+prison-01 = "127.0.0.1:25570"
+
+# Join order. Listing two lobbies means a lobby restart does not
+# lock players out of the network.
+try = ["lobby-01", "lobby-02"]
+
+[forced-hosts]
+"survival.example.net" = ["survival-01"]
+"skyblock.example.net" = ["skyblock-01"]
+"prison.example.net" = ["prison-01"]
+
+[advanced]
+# 256 matches the backend network-compression-threshold. A mismatch
+# means packets get decompressed and recompressed at the proxy.
+compression-threshold = 256
+compression-level = -1
+
+login-ratelimit = 3000
+connection-timeout = 5000
+read-timeout = 30000
+
+haproxy-protocol = false
+tcp-fast-open = true
+bungee-plugin-message-channel = true
+show-ping-requests = false
+failover-on-unexpected-server-disconnect = true
+announce-proxy-commands = true
+log-command-executions = false
+log-player-connections = true
+
+[query]
+enabled = false
+port = 25565
+map = "CodeHub Network"
+show-plugins = false
